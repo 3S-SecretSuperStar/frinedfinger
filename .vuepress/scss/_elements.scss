@@ -1,0 +1,10 @@
+.body {
+  &.home {
+    .masthead {
+      background: #e9ecef;
+      text-align: center;
+      padding: 7em 0.5em;
+      height: 85vh;
+    }
+  }
+}

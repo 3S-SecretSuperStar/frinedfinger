@@ -1,11 +1,9 @@
 <template>
-    <div class="main">
+    <div :class="`body ${bodyClass}`">
         <site-header />
-        <b-container class="mt-5">
-            <transition name="fade" mode="out-in">
-                <component v-if="page" :is="page" :key="page"></component>
-            </transition>
-        </b-container>
+        <transition name="fade" mode="out-in">
+            <component v-if="page" :is="page" :key="page"></component>
+        </transition>
         <site-footer />
     </div>
 </template>
@@ -21,6 +19,9 @@
     computed: {
       page () {
         return this.$page.frontmatter.component || null;
+      },
+      bodyClass () {
+        return this.page.toLowerCase();
       },
     },
   };

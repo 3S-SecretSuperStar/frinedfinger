@@ -9,3 +9,11 @@ body {
   background-image: linear-gradient(to right, #97168a, #540c4d);
   min-height: 100vh;
 }
+
+.navbar {
+  .navbar-brand {
+    img {
+      margin-top: -4px;
+    }
+  }
+}

@@ -1,10 +1,10 @@
 <template>
     <div v-if="loading" class="p-4">
-        <RingLoader
+        <HashLoader
                 class="mx-auto"
                 :loading="loading"
-                color="#e74c3c"
-                :size="150"></RingLoader>
+                color="#97168a"
+                :size="50"></HashLoader>
     </div>
 </template>
 
