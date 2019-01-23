@@ -14,6 +14,17 @@ export default {
       }
       return vars;
     },
+    promisify (fn, ...args) {
+      return new Promise((resolve, reject) => {
+        fn(...args, (err, res) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(res);
+          }
+        });
+      });
+    },
     print () {
       window.print();
     },

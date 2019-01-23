@@ -9,7 +9,9 @@ export default {
       legacy: false,
       web3: null,
       web3Provider: null,
+      zeroAddress: '0x0000000000000000000000000000000000000000',
       metamask: {
+        address: '',
         installed: false,
         netId: null,
       },
@@ -87,6 +89,7 @@ export default {
               this.network.current = this.network.list[this.network.map[netId]];
               await this.initWeb3(network, false);
             }
+            this.metamask.address = this.web3.eth.accounts[0];
             resolve();
           });
         } else {
@@ -107,16 +110,17 @@ export default {
 
       this.ready();
     },
-    promisify (fn, ...args) {
-      return new Promise((resolve, reject) => {
-        fn(...args, (err, res) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(res);
-          }
-        });
-      });
+    async connect () {
+      try {
+        if (!this.legacy) {
+          await this.web3Provider.enable();
+        }
+
+        this.metamask.address = this.web3.eth.accounts[0];
+      } catch (e) {
+        console.log(e);
+        alert('Cannot connect. Please verify that you have MetaMask installed and unlocked.');
+      }
     },
     ready () {
 
