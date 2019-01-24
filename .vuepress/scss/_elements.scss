@@ -7,4 +7,12 @@
       height: 85vh;
     }
   }
+
+  &.faucet {
+    .masthead {
+      color: #ffffff;
+      text-align: center;
+      padding: 4em 0.5em 0.5em 0.5em;
+    }
+  }
 }

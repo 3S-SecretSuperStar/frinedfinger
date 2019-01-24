@@ -1,6 +1,6 @@
 <template>
     <b-row class="masthead m-0">
-        <b-col lg="8" offset-lg="2" class="">
+        <b-col lg="8" offset-lg="2">
             <h1 class="display-4">
                 <b-img :src="$withBase('/assets/images/logo/shaka_logo_white.png')"
                        rounded="circle"

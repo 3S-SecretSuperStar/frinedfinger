@@ -2,7 +2,7 @@
     <b-row>
         <b-col lg="12">
             <b-card title="Faucet"
-                    sub-title="Get FREE Shaka Tokens every day">
+                    :sub-title="$page.title">
                 <template v-if="loading">
                     <ui--loader :loading="true"></ui--loader>
                 </template>
