@@ -3,6 +3,7 @@ module.exports = {
   description: 'Shaka (HAK) is an ERC20 Token issued by FriendsFingers and that will give holders rights to be active part of the platform like in a Decentralized Autonomous Organization (DAO).', // eslint-disable-line max-len
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['meta', { property: 'google-site-verification', content: 'c0BYczxXdBqyQL7I53N_77M_GcsNQIK9IHvjoAeMbW4' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: 'Shaka (HAK) | The Token for a new way crowdfunding' }],
     ['meta', { property: 'og:url', content: 'https://shaka.friendsfingers.com' }],
