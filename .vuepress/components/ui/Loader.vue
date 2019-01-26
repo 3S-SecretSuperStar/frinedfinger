@@ -3,7 +3,7 @@
         <HashLoader
                 class="mx-auto"
                 :loading="loading"
-                color="#97168a"
+                :color="color"
                 :size="50"></HashLoader>
     </div>
 </template>
@@ -15,6 +15,10 @@
       loading: {
         type: Boolean,
         default: false,
+      },
+      color: {
+        type: String,
+        default: '#97168a',
       },
     },
   };

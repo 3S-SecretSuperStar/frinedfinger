@@ -9,12 +9,13 @@
                            :alt="$site.title" /><br>
                     Shaka Faucet
                 </h1>
-                <h4>{{ $page.title }}</h4>
-                <p class="lead">{{ $page.frontmatter.description }}</p>
+                <h4 class="text-muted">{{ $page.frontmatter.description }}</h4>
+                <hr class="my-5">
+                <p class="lead">{{ $site.description }}</p>
             </b-col>
         </b-row>
         <b-row class="masthead primary m-0">
-            <b-container id="faucet">
+            <b-container>
                 <b-row>
                     <b-col lg="10" offset-lg="1">
                         <ui--token-faucet></ui--token-faucet>

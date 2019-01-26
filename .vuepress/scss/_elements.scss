@@ -10,13 +10,16 @@
   &.faucet {
     .masthead {
       text-align: center;
-      padding: 4em 0.5em 4em 0.5em;
+      padding: 4em 0.5em 0.5em 0.5em;
 
       &.primary {
         text-align: left;
-        background: #b733a7;
-        background-image: linear-gradient(to right, #b733a7, #97168a);
       }
+    }
+
+    #faucet-box {
+      background: #b733a7;
+      background-image: linear-gradient(to right, #b733a7, #97168a);
     }
   }
 

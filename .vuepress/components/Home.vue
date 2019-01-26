@@ -8,8 +8,9 @@
                        :alt="$site.title" /><br>
                 {{ $site.title }}
             </h1>
+            <h4 class="text-muted">{{ $page.title }}</h4>
             <p class="lead">{{ $site.description }}</p>
-            <hr class="my-4">
+            <hr class="my-5">
             <p class="lead">
                 <b-btn variant="primary" size="lg" :to="$withBase('/faucet.html')">Get FREE Shaka</b-btn>
             </p>

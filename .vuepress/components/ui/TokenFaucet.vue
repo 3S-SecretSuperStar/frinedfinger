@@ -1,23 +1,10 @@
 <template>
     <b-row>
         <b-col lg="12">
-            <b-card title="Faucet"
-                    :sub-title="$page.title">
-                <template v-if="loading">
-                    <ui--loader :loading="true"></ui--loader>
-                </template>
-                <template v-else>
-                    <p class="card-text">
-                        We already distributed <b>{{ faucet.distributedTokens }} {{ token.symbol }}</b><br>
-                        Remaining <b>{{ faucet.remainingTokens }} {{ token.symbol }}</b><br>
-                        You can earn <b>{{ faucet.dailyRate }} {{ token.symbol }}</b> per day and
-                        <b>{{ faucet.referralTokens }} {{ token.symbol }}</b> for each time your friends will use the faucet
-                    </p>
-                </template>
-            </b-card>
-            <b-card v-if="!loading" title="Your account"
+            <b-card v-if="!loading"
+                    title="Your account"
                     sub-title="Connect your account and start earning your Shaka Tokens"
-                    class="mt-3">
+                    class="mb-3">
                 <template v-if="metamask.address">
                     <template v-if="!makingTransaction && !loadingData">
                         <p class="card-text">
@@ -103,6 +90,21 @@
                     </p>
                 </template>
             </b-card>
+            <b-card title="Faucet status"
+                    id="faucet-box"
+                    class="mb-3 text-white">
+                <template v-if="loading">
+                    <ui--loader :loading="true" color="#ffffff"></ui--loader>
+                </template>
+                <template v-else>
+                    <p class="card-text">
+                        We've already distributed <b>{{ faucet.distributedTokens }} {{ token.symbol }}</b><br>
+                        Remaining <b>{{ faucet.remainingTokens }} {{ token.symbol }}</b><br>
+                        You can earn <b>{{ faucet.dailyRate }} {{ token.symbol }}</b> per day and
+                        <b>{{ faucet.referralTokens }} {{ token.symbol }}</b> for each time your friends will use the faucet
+                    </p>
+                </template>
+            </b-card>
         </b-col>
     </b-row>
 </template>
@@ -130,6 +132,9 @@
         token: {
           name: '',
           symbol: '',
+          decimals: 18,
+          link: '',
+          logo: '',
         },
         faucet: {
           dailyRate: 0,
@@ -191,6 +196,8 @@
         try {
           this.token.name = await this.promisify(this.instances.token.name);
           this.token.symbol = await this.promisify(this.instances.token.symbol);
+          this.token.link = this.network.current.etherscanLink + '/token/' + this.instances.token.address;
+          this.token.logo = this.$withBase('/assets/images/logo/shaka_logo_white.png');
         } catch (e) {
           console.log(e);
           this.loading = false;
