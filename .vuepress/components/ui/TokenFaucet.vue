@@ -8,8 +8,8 @@
                 </template>
                 <template v-else>
                     <p class="card-text">
-                        We already distributed <b>{{ faucet.distributedTokens }}</b>
-                        of <b>{{ faucet.remainingTokens }} {{ token.symbol }}</b><br>
+                        We already distributed <b>{{ faucet.distributedTokens }} {{ token.symbol }}</b><br>
+                        Remaining <b>{{ faucet.remainingTokens }} {{ token.symbol }}</b><br>
                         You can earn <b>{{ faucet.dailyRate }} {{ token.symbol }}</b> per day and
                         <b>{{ faucet.referralTokens }} {{ token.symbol }}</b> for each time your friends will use the faucet
                     </p>
@@ -19,47 +19,51 @@
                     sub-title="Connect your account and start earning your Shaka Tokens"
                     class="mt-3">
                 <template v-if="metamask.address">
-                    <p class="card-text">
-                        Account: <b>{{ account.address }}</b><br>
-                        Referral: <b>{{ account.referral === zeroAddress ? 'None' : account.referral }}</b><br>
-                        Received Tokens: <b>{{ account.receivedTokens }} {{ token.symbol }}</b><br>
-                        Referred Addresses: <b>{{ account.referredAddresses.length }}</b><br>
-                        Earned by Referral: <b>{{ account.earnedByReferral }} {{ token.symbol }}</b><br>
-                        <template v-if="account.lastUpdate !== 0">
-                            Last Update: <b>{{ account.lastUpdate | formatLocaleDate }}</b><br>
-                            Next Claim Date: <b>{{ account.nextClaimTime | formatLocaleDate }}</b><br>
-                        </template>
-                    </p>
-                    <b-form v-on:submit.prevent="getTokens" class="mt-3" v-if="!makingTransaction">
-                        <b-form-group id="referral-group"
-                                      label="Referral Address:"
-                                      label-for="referral"
-                                      v-if="account.receivedTokens === 0"
-                                      description="Your referral address">
-                            <b-form-input id="referral"
-                                          name="referral"
-                                          type="text"
-                                          size="lg"
-                                          v-validate="'not_yourself|eth_address'"
-                                          v-model="referralAddress"
-                                          data-vv-as="Referral Address"
-                                          :class="{'is-invalid': errors.has('referral')}"
-                                          placeholder="0x12312312...">
-                            </b-form-input>
-                            <small v-show="errors.has('referral')" class="text-danger">
-                                {{ errors.first('referral') }}
-                            </small>
-                        </b-form-group>
+                    <template v-if="!makingTransaction && !loadingData">
+                        <p class="card-text">
+                            Account: <b>{{ account.address }}</b><br>
+                            Referral: <b>{{ account.referral === zeroAddress ? 'None' : account.referral }}</b><br>
+                            Received Tokens: <b>{{ account.receivedTokens }} {{ token.symbol }}</b><br>
+                            Referred Addresses: <b>{{ account.referredAddresses.length }}</b><br>
+                            Earned by Referral: <b>{{ account.earnedByReferral }} {{ token.symbol }}</b><br>
+                            <template v-if="account.lastUpdate !== 0">
+                                Last Update: <b>{{ account.lastUpdate | formatLocaleDate }}</b><br>
+                                Next Claim Date: <b>{{ account.nextClaimTime | formatLocaleDate }}</b><br>
+                            </template>
+                        </p>
+                        <b-form v-on:submit.prevent="getTokens" class="mt-3" v-if="!makingTransaction">
+                            <b-form-group id="referral-group"
+                                          label="Referral Address:"
+                                          label-for="referral"
+                                          v-if="account.receivedTokens === 0"
+                                          description="Your referral address">
+                                <b-form-input id="referral"
+                                              name="referral"
+                                              type="text"
+                                              size="lg"
+                                              v-validate="'not_yourself|eth_address'"
+                                              v-model="referralAddress"
+                                              data-vv-as="Referral Address"
+                                              :class="{'is-invalid': errors.has('referral')}"
+                                              placeholder="0x12312312...">
+                                </b-form-input>
+                                <small v-show="errors.has('referral')" class="text-danger">
+                                    {{ errors.first('referral') }}
+                                </small>
+                            </b-form-group>
 
-                        <b-btn type="submit"
-                               variant="primary"
-                               :disabled="errors.has('referral')"
-                               size="lg">
-                            Get Tokens
-                        </b-btn>
+                            <b-btn type="submit"
+                                   variant="primary"
+                                   :disabled="errors.has('referral') || account.nextClaimTime > Date.now()"
+                                   size="lg">
+                                Get Tokens
+                            </b-btn>
 
+                            <b-alert show v-if="trx.hash" variant="success" class="mt-3">
+                                Last transaction: <b-link :href="trx.link" target="_blank">{{ trx.hash }}</b-link>.
+                            </b-alert>
+                        </b-form>
                         <hr class="my-4">
-
                         <b-form-group id="my-link-group"
                                       label="Your referral link is:"
                                       label-for="my-link"
@@ -72,7 +76,10 @@
                                           v-model="account.referralLink">
                             </b-form-input>
                         </b-form-group>
-                    </b-form>
+                    </template>
+                    <template v-else>
+                        <ui--loader :loading="true"></ui--loader>
+                    </template>
                 </template>
                 <template v-else>
                     <b-alert show v-if="!metamask.installed || metamask.netId !== network.current.id" variant="warning">
@@ -113,8 +120,13 @@
     data () {
       return {
         loading: true,
+        loadingData: false,
         makingTransaction: false,
         referralAddress: '',
+        trx: {
+          hash: '',
+          link: '',
+        },
         token: {
           name: '',
           symbol: '',
@@ -206,6 +218,7 @@
         }
       },
       async getAccountData () {
+        this.loadingData = true;
         try {
           if (this.metamask.address) {
             this.account.address = this.web3.eth.accounts[0];
@@ -230,20 +243,37 @@
               `/faucet.html?referral=${this.account.address}`
             );
           }
+          this.loadingData = false;
         } catch (e) {
           console.log(e);
-          this.loading = false;
+          this.loadingData = false;
           alert('Some error occurred.');
         }
       },
       getTokens () {
         this.$validator.validateAll().then(async (result) => {
           if (result) {
-            alert('TODO');
+            this.makingTransaction = true;
+
+            this.instances.faucet.getTokensWithReferral(
+              this.referralAddress,
+              {
+                from: this.account.address,
+              },
+              (err, trxHash) => {
+                if (!err) {
+                  this.trx.hash = trxHash;
+                  this.trx.link = this.network.current.etherscanLink + '/tx/' + this.trx.hash;
+                } else {
+                  alert('Some error occurred. Maybe you rejected the transaction or you have MetaMask locked!');
+                }
+                this.makingTransaction = false;
+              }
+            );
           }
         }).catch ((e) => {
           console.log(e);
-          this.loading = false;
+          this.makingTransaction = false;
           alert('Some error occurred.');
         });
       },
