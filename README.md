@@ -3,7 +3,11 @@ title: Shaka (HAK) | The Token for a new way crowdfunding
 component: Home
 ---
 
-Code created using [VuePress](https://vuepress.vuejs.org/).
+## Shaka Token official web site
+
+Source code of [shaka.friendsfingers.com](https://shaka.friendsfingers.com)
+
+Shaka (HAK) is an ERC20 Token issued by [FriendsFingers](https://www.friendsfingers.com) and that will give holders rights to be active part of the platform like in a Decentralized Autonomous Organization (DAO).
 
 ## Install dependencies
 
