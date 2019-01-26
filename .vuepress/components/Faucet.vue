@@ -11,19 +11,17 @@
                 </h1>
                 <h4>{{ $page.title }}</h4>
                 <p class="lead">{{ $page.frontmatter.description }}</p>
-                <hr class="my-4">
-                <p class="lead">
-                    <b-btn variant="primary" size="lg" href="#faucet">Get your Shaka</b-btn>
-                </p>
             </b-col>
         </b-row>
-        <b-container id="faucet" class="mt-5">
-            <b-row>
-                <b-col lg="10" offset-lg="1">
-                    <ui--token-faucet></ui--token-faucet>
-                </b-col>
-            </b-row>
-        </b-container>
+        <b-row class="masthead primary m-0">
+            <b-container id="faucet">
+                <b-row>
+                    <b-col lg="10" offset-lg="1">
+                        <ui--token-faucet></ui--token-faucet>
+                    </b-col>
+                </b-row>
+            </b-container>
+        </b-row>
     </div>
 </template>
 

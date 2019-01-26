@@ -1,7 +1,6 @@
 .body {
   &.home {
     .masthead {
-      background: #e9ecef;
       text-align: center;
       padding: 7em 0.5em;
       height: 85vh;
@@ -10,9 +9,24 @@
 
   &.faucet {
     .masthead {
-      color: #ffffff;
       text-align: center;
-      padding: 4em 0.5em 0.5em 0.5em;
+      padding: 4em 0.5em 4em 0.5em;
+
+      &.primary {
+        text-align: left;
+        background: #b733a7;
+        background-image: linear-gradient(to right, #b733a7, #97168a);
+      }
     }
+  }
+
+  .btn-primary {
+    background: #b733a7;
+    background-image: linear-gradient(to right, #b733a7, #97168a);
+    border-color: #b733a7;
+  }
+
+  .badge-info {
+    background: #b733a7;
   }
 }

@@ -8,10 +8,10 @@
                 </template>
                 <template v-else>
                     <p class="card-text">
-                        Distributed Tokens: <b>{{ faucet.distributedTokens }} {{ token.symbol }}</b><br>
-                        Remaining Tokens: <b>{{ faucet.remainingTokens }} {{ token.symbol }}</b><br>
-                        Daily Rate: <b>{{ faucet.dailyRate }} {{ token.symbol }}</b><br>
-                        Referral Tokens: <b>{{ faucet.referralTokens }} {{ token.symbol }}</b>
+                        We already distributed <b>{{ faucet.distributedTokens }}</b>
+                        of <b>{{ faucet.remainingTokens }} {{ token.symbol }}</b><br>
+                        You can earn <b>{{ faucet.dailyRate }} {{ token.symbol }}</b> per day and
+                        <b>{{ faucet.referralTokens }} {{ token.symbol }}</b> for each time your friends will use the faucet
                     </p>
                 </template>
             </b-card>
@@ -41,6 +41,7 @@
                                           type="text"
                                           size="lg"
                                           v-validate="'not_yourself|eth_address'"
+                                          v-model="referralAddress"
                                           data-vv-as="Referral Address"
                                           :class="{'is-invalid': errors.has('referral')}"
                                           placeholder="0x12312312...">
@@ -56,6 +57,21 @@
                                size="lg">
                             Get Tokens
                         </b-btn>
+
+                        <hr class="my-4">
+
+                        <b-form-group id="my-link-group"
+                                      label="Your referral link is:"
+                                      label-for="my-link"
+                                      description="Share link with your friends and earn Shaka Tokens">
+                            <b-form-input id="my-link"
+                                          name="my-link"
+                                          type="text"
+                                          size="lg"
+                                          readonly
+                                          v-model="account.referralLink">
+                            </b-form-input>
+                        </b-form-group>
                     </b-form>
                 </template>
                 <template v-else>
@@ -98,6 +114,7 @@
       return {
         loading: true,
         makingTransaction: false,
+        referralAddress: '',
         token: {
           name: '',
           symbol: '',
@@ -116,11 +133,13 @@
           referredAddresses: [],
           lastUpdate: 0,
           nextClaimTime: 0,
+          referralLink: '',
         },
       };
     },
     computed: {},
     async mounted () {
+      this.referralAddress = this.getParam('referral');
       this.currentNetwork = this.network.default;
       await this.initDapp();
     },
@@ -206,6 +225,10 @@
             this.account.nextClaimTime = (
               await this.promisify(this.instances.faucet.nextClaimTime, this.account.address)
             ).valueOf() * 1000;
+
+            this.account.referralLink = window.location.origin + this.$withBase(
+              `/faucet.html?referral=${this.account.address}`
+            );
           }
         } catch (e) {
           console.log(e);

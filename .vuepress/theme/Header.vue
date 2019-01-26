@@ -1,6 +1,5 @@
 <template>
-    <b-navbar toggleable="md" variant="light" fixed="top">
-
+    <b-navbar toggleable="md" variant="light" fixed="top" :sticky="true">
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
         <b-navbar-brand to="/">
@@ -14,8 +13,8 @@
         <b-collapse is-nav id="nav_collapse">
 
             <b-navbar-nav>
-                <b-nav-item to="#">About</b-nav-item>
-                <b-nav-item to="/faucet.html">Faucet</b-nav-item>
+                <b-nav-item :to="$withBase('/faucet.html')">Faucet</b-nav-item>
+                <b-nav-item href="https://www.friendsfingers.com" target="_blank">FriendsFingers</b-nav-item>
             </b-navbar-nav>
 
             <b-navbar-nav class="ml-auto">

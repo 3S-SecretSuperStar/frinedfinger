@@ -11,7 +11,7 @@
             <p class="lead">{{ $site.description }}</p>
             <hr class="my-4">
             <p class="lead">
-                <b-btn variant="primary" size="lg" href="#">More Info</b-btn>
+                <b-btn variant="primary" size="lg" :to="$withBase('/faucet.html')">Get FREE Shaka</b-btn>
             </p>
         </b-col>
     </b-row>
