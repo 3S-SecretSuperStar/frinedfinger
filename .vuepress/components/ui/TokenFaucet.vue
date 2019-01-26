@@ -101,7 +101,8 @@
                         We've already distributed <b>{{ faucet.distributedTokens }} {{ token.symbol }}</b><br>
                         Remaining <b>{{ faucet.remainingTokens }} {{ token.symbol }}</b><br>
                         You can earn <b>{{ faucet.dailyRate }} {{ token.symbol }}</b> per day and
-                        <b>{{ faucet.referralTokens }} {{ token.symbol }}</b> for each time your friends will use the faucet
+                        <b>{{ faucet.referralTokens }} {{ token.symbol }}</b>
+                        for each time your friends will use the faucet
                     </p>
                 </template>
             </b-card>

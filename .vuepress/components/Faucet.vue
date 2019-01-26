@@ -10,19 +10,15 @@
                     Shaka Faucet
                 </h1>
                 <h4 class="text-muted">{{ $page.frontmatter.description }}</h4>
-                <hr class="my-5">
-                <p class="lead">{{ $site.description }}</p>
             </b-col>
         </b-row>
-        <b-row class="masthead primary m-0">
-            <b-container>
-                <b-row>
-                    <b-col lg="10" offset-lg="1">
-                        <ui--token-faucet></ui--token-faucet>
-                    </b-col>
-                </b-row>
-            </b-container>
-        </b-row>
+        <b-container class="mt-4">
+            <b-row>
+                <b-col lg="10" offset-lg="1">
+                    <ui--token-faucet></ui--token-faucet>
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
 </template>
 
