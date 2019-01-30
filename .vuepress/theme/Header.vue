@@ -14,6 +14,7 @@
 
             <b-navbar-nav>
                 <b-nav-item :to="$withBase('/faucet.html')">Faucet</b-nav-item>
+                <b-nav-item href="https://medium.com/friendsfingers" target="_blank">Blog</b-nav-item>
                 <b-nav-item href="https://www.friendsfingers.com" target="_blank">FriendsFingers</b-nav-item>
             </b-navbar-nav>
 

@@ -2,7 +2,7 @@
   &.home {
     .masthead {
       text-align: center;
-      padding: 7em 0.5em;
+      padding: 7em 0.5em 4em 0.5em;
     }
   }
 
@@ -13,18 +13,26 @@
     }
 
     #faucet-box {
-      background: #b733a7;
-      background-image: linear-gradient(to right, #b733a7, #97168a);
+      background: $primary-color;
+      background-image: linear-gradient(to right, $primary-color, $primary-color-dark);
     }
   }
 
   .btn-primary {
     background: #b733a7;
-    background-image: linear-gradient(to right, #b733a7, #97168a);
-    border-color: #b733a7;
+    background-image: linear-gradient(to right, $primary-color, $primary-color-dark);
+    border-color: $primary-color;
   }
 
   .badge-info {
-    background: #b733a7;
+    background: $primary-color;
+  }
+
+  .social-links {
+    a {
+      color: $primary-color;
+      font-size: 1.6em;
+      margin: 0.2em;
+    }
   }
 }
