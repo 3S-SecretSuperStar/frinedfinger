@@ -26,8 +26,8 @@
 
 <script>
   export default {
-    name: "SocialLinks"
-  }
+    name: 'SocialLinks',
+  };
 </script>
 
 <style scoped>

@@ -19,6 +19,9 @@
                             </template>
                         </p>
                         <b-form v-on:submit.prevent="getTokens" class="mt-3" v-if="!makingTransaction">
+                            <template v-if="referral.link">
+                                <h5>Your referral: <b-link :href="referral.link" target="_blank">{{ referral.name }}</b-link></h5>
+                            </template>
                             <b-form-group id="referral-group"
                                           label="Referral Address:"
                                           label-for="referral"
@@ -29,7 +32,8 @@
                                               type="text"
                                               size="lg"
                                               v-validate="'not_yourself|eth_address'"
-                                              v-model="referralAddress"
+                                              v-model="referral.address"
+                                              :readonly="passedReferral"
                                               data-vv-as="Referral Address"
                                               :class="{'is-invalid': errors.has('referral')}"
                                               placeholder="0x12312312...">
@@ -51,6 +55,7 @@
                             </b-alert>
                         </b-form>
                         <hr class="my-4">
+                        <h4>Earn more Shaka Tokens with your referral link</h4>
                         <b-form-group id="my-link-group"
                                       label="Your referral link is:"
                                       label-for="my-link"
@@ -114,6 +119,8 @@
   import browser from '../../mixins/browser';
   import dapp from '../../mixins/dapp';
 
+  import friends from '../../content/referrals';
+
   export default {
     name: 'TokenFaucet',
     mixins: [
@@ -125,10 +132,16 @@
         loading: true,
         loadingData: false,
         makingTransaction: false,
+        passedReferral: '',
         referralAddress: '',
         trx: {
           hash: '',
           link: '',
+        },
+        referral: {
+          name: '',
+          link: '',
+          address: '',
         },
         token: {
           name: '',
@@ -157,7 +170,15 @@
     },
     computed: {},
     async mounted () {
-      this.referralAddress = this.getParam('referral');
+      const referral = friends[this.getParam('friend')];
+
+      if (referral) {
+        this.referral = referral;
+      } else {
+        this.passedReferral = this.getParam('referral');
+        this.referral.address = this.passedReferral;
+      }
+
       this.currentNetwork = this.network.default;
       await this.initDapp();
     },
@@ -264,7 +285,7 @@
             this.makingTransaction = true;
 
             this.instances.faucet.getTokensWithReferral(
-              this.referralAddress,
+              this.referral.address,
               {
                 from: this.account.address,
               },
@@ -279,7 +300,7 @@
               }
             );
           }
-        }).catch ((e) => {
+        }).catch((e) => {
           console.log(e);
           this.makingTransaction = false;
           alert('Some error occurred.');
