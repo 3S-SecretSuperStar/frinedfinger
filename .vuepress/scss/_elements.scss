@@ -2,7 +2,21 @@
   &.home {
     .masthead {
       text-align: center;
-      padding: 7em 0.5em 4em 0.5em;
+      &.main {
+        padding: 9em 0.5em 9em 0.5em;
+      }
+
+      &.purple {
+        background: $primary-color;
+        background-image: linear-gradient(to right, $primary-color, $primary-color-dark);
+        color: #ffffff;
+        padding: 4em 0.5em 4em 0.5em;
+      }
+
+      &.white {
+        background: #ffffff;
+        padding: 4em 0.5em 4em 0.5em;
+      }
     }
   }
 
@@ -19,9 +33,16 @@
   }
 
   .btn-primary {
-    background: #b733a7;
+    background: $primary-color;
     background-image: linear-gradient(to right, $primary-color, $primary-color-dark);
     border-color: $primary-color;
+  }
+
+  .btn-action {
+    color: $blue-color-darker;
+    background: $yellow-color;
+    background-image: linear-gradient(to right, $yellow-color, $yellow-color-dark);
+    border-color: $yellow-color;
   }
 
   .badge-info {
