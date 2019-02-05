@@ -179,7 +179,7 @@
         this.referral = referral;
         this.passedReferral = this.referral.address;
       } else {
-        this.passedReferral = this.getParam('referral');
+        this.passedReferral = this.getParam('referral') || '';
         this.referral.address = this.passedReferral;
       }
 
