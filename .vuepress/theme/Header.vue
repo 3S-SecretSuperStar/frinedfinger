@@ -19,7 +19,7 @@
             </b-navbar-nav>
 
             <b-navbar-nav class="ml-auto">
-                <b-nav-item disabled><b-badge variant="info" class="p-1">{{ currentNetwork }}</b-badge></b-nav-item>
+                <b-nav-item href="https://etherscan.io/token/0x93a7174dafd31d13400cd9fa01f4e5b5baa00d39" target="_blank"><b-badge variant="info" class="p-1">View on Etherscan</b-badge></b-nav-item>
             </b-navbar-nav>
 
         </b-collapse>
@@ -27,14 +27,7 @@
 </template>
 
 <script>
-  /* global __DEFAULT_NETWORK_NAME__ */
-
   export default {
     name: 'Header',
-    data () {
-      return {
-        currentNetwork: __DEFAULT_NETWORK_NAME__,
-      };
-    },
   };
 </script>

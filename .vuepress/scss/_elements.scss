@@ -6,6 +6,13 @@
         padding: 9em 0.5em 9em 0.5em;
       }
 
+      &.yellow {
+        background: $yellow-color;
+        background-image: linear-gradient(to right, $yellow-color, $yellow-color-dark);
+        color: $blue-color-darker;
+        padding: 4em 0.5em 4em 0.5em;
+      }
+
       &.purple {
         background: $primary-color;
         background-image: linear-gradient(to right, $primary-color, $primary-color-dark);

@@ -2,28 +2,42 @@
     <b-row>
         <b-col lg="12">
             <b-card v-if="!loading"
-                    title="Your account"
-                    sub-title="Connect your account and start earning your Shaka Tokens"
+                    header="Your account"
                     class="mb-3">
                 <template v-if="metamask.address">
                     <template v-if="!makingTransaction && !loadingData">
-                        <p class="card-text">
-                            Account: <b>{{ account.address }}</b><br>
-                            Referral: <b>{{ account.referral === zeroAddress ? 'None' : account.referral }}</b><br>
-                            Received Tokens: <b>{{ account.receivedTokens }} {{ token.symbol }}</b><br>
-                            Referred Addresses: <b>{{ account.referredAddresses.length }}</b><br>
-                            Earned by Referral: <b>{{ account.earnedByReferral }} {{ token.symbol }}</b><br>
-                            <template v-if="account.lastUpdate !== 0">
-                                Last Update: <b>{{ account.lastUpdate | formatLocaleDate }}</b><br>
-                                Next Claim Date: <b>{{ account.nextClaimTime | formatLocaleDate }}</b><br>
-                            </template>
-                        </p>
+                        <b>Account:</b>
+                        <b-link :href="`${network.current.etherscanLink}/address/${account.address}`"
+                                target="_blank">{{ account.address }}</b-link><br>
+
+                        <template v-if="account.referral !== zeroAddress">
+                            <b>You have been invited by:</b>
+                            <b-link :href="`${network.current.etherscanLink}/address/${account.referral}`"
+                                    target="_blank">{{ account.referral }}</b-link><br>
+                        </template>
+
+                        You have earned <b>{{ account.receivedTokens }} {{ token.symbol }}</b> by using faucet.<br>
+
+                        <template v-if="account.referredAddresses.length > 0">
+                            You have earned <b>{{ account.earnedByReferral }} {{ token.symbol }}</b>
+                            from your <b>{{ account.referredAddresses.length }}</b> referred addresses.<br>
+                        </template>
+
+                        <template v-if="account.lastUpdate !== 0">
+                            <small>
+                                Last Update: <b>{{ account.lastUpdate | formatLocaleDate }}</b>,
+                                you can claim again on <b>{{ account.nextClaimTime | formatLocaleDate }}</b>
+                            </small>
+                        </template>
+
                         <template v-if="referral.link && account.receivedTokens === 0">
+                            <br>
                             <h5>
                                 Your referral:
                                 <b-link :href="referral.link" target="_blank">{{ referral.name }}</b-link>
                             </h5>
                         </template>
+                        
                         <b-form v-on:submit.prevent="getTokens" class="mt-3" v-if="!makingTransaction">
                             <b-form-group id="referral-group"
                                           label="Referral Address:"
@@ -81,14 +95,17 @@
                         <template v-if="!metamask.installed">
                             Install
                             <b-link href="https://metamask.io/" target="_blank">MetaMask</b-link>
+                            or mobile browser like
+                            <b-link href="https://trustwallet.com/" target="_blank">Trust Wallet</b-link> or
+                            <b-link href="https://wallet.coinbase.com/" target="_blank">Coinbase Wallet</b-link>
                             to get your Tokens.
                         </template>
                         <template v-else-if="metamask.netId !== network.current.id">
                             You are on the wrong Network.<br>
-                            Please switch MetaMask on <b>{{ network.current.name }}</b>.
+                            Please switch your Ethereum Provider on <b>{{ network.current.name }}</b>.
                         </template>
                     </b-alert>
-                    <p class="card-text">
+                    <p v-else class="card-text">
                         <b-btn variant="primary"
                                size="lg"
                                :disabled="!metamask.installed || metamask.netId !== network.current.id"
@@ -106,11 +123,11 @@
                 </template>
                 <template v-else>
                     <p class="card-text">
-                        We've already distributed <b>{{ faucet.distributedTokens }} {{ token.symbol }}</b><br>
-                        Remaining <b>{{ faucet.remainingTokens }} {{ token.symbol }}</b><br>
+                        We've already distributed <b>{{ faucet.distributedTokens }} {{ token.symbol }}</b>.
+                        Remaining tokens <b>{{ faucet.remainingTokens }} {{ token.symbol }}</b>.<br>
                         You can earn <b>{{ faucet.dailyRate }} {{ token.symbol }}</b> per day and
                         <b>{{ faucet.referralTokens }} {{ token.symbol }}</b>
-                        for each time your friends will use the faucet
+                        for each time your friends will use the faucet.
                     </p>
                 </template>
             </b-card>
