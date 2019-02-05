@@ -18,10 +18,13 @@
                                 Next Claim Date: <b>{{ account.nextClaimTime | formatLocaleDate }}</b><br>
                             </template>
                         </p>
+                        <template v-if="referral.link && account.receivedTokens === 0">
+                            <h5>
+                                Your referral:
+                                <b-link :href="referral.link" target="_blank">{{ referral.name }}</b-link>
+                            </h5>
+                        </template>
                         <b-form v-on:submit.prevent="getTokens" class="mt-3" v-if="!makingTransaction">
-                            <template v-if="referral.link">
-                                <h5>Your referral: <b-link :href="referral.link" target="_blank">{{ referral.name }}</b-link></h5>
-                            </template>
                             <b-form-group id="referral-group"
                                           label="Referral Address:"
                                           label-for="referral"
@@ -33,7 +36,7 @@
                                               size="lg"
                                               v-validate="'not_yourself|eth_address'"
                                               v-model="referral.address"
-                                              :readonly="passedReferral"
+                                              :readonly="passedReferral !== ''"
                                               data-vv-as="Referral Address"
                                               :class="{'is-invalid': errors.has('referral')}"
                                               placeholder="0x12312312...">
@@ -119,7 +122,7 @@
   import browser from '../../mixins/browser';
   import dapp from '../../mixins/dapp';
 
-  import friends from '../../content/referrals';
+  import friends from '../../content/friends';
 
   export default {
     name: 'TokenFaucet',
@@ -174,6 +177,7 @@
 
       if (referral) {
         this.referral = referral;
+        this.passedReferral = this.referral.address;
       } else {
         this.passedReferral = this.getParam('referral');
         this.referral.address = this.passedReferral;
