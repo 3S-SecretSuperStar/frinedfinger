@@ -37,12 +37,12 @@
                                 <b-link :href="referral.link" target="_blank">{{ referral.name }}</b-link>
                             </h5>
                         </template>
-                        
+
                         <b-form v-on:submit.prevent="getTokens" class="mt-3" v-if="!makingTransaction">
                             <b-form-group id="referral-group"
                                           label="Referral Address:"
                                           label-for="referral"
-                                          v-if="account.receivedTokens === 0"
+                                          v-if="account.receivedTokens === 0 && referral.address !== ''"
                                           description="Your referral address">
                                 <b-form-input id="referral"
                                               name="referral"
@@ -50,7 +50,7 @@
                                               size="lg"
                                               v-validate="'not_yourself|eth_address'"
                                               v-model="referral.address"
-                                              :readonly="passedReferral !== ''"
+                                              readonly
                                               data-vv-as="Referral Address"
                                               :class="{'is-invalid': errors.has('referral')}"
                                               placeholder="0x12312312...">
@@ -152,7 +152,6 @@
         loading: true,
         loadingData: false,
         makingTransaction: false,
-        passedReferral: '',
         referralAddress: '',
         trx: {
           hash: '',
@@ -194,10 +193,8 @@
 
       if (referral) {
         this.referral = referral;
-        this.passedReferral = this.referral.address;
       } else {
-        this.passedReferral = this.getParam('referral') || '';
-        this.referral.address = this.passedReferral;
+        this.referral.address = this.getParam('referral') || '';
       }
 
       this.currentNetwork = this.network.default;
