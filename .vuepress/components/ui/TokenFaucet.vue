@@ -94,7 +94,7 @@
                             <b-btn :href="account.share.telegram" target="_blank" class="telegram">
                                 <font-awesome-icon :icon="['fab', 'telegram-plane']" />
                             </b-btn>
-                            <b-btn :href="account.share.whatsapp" target="_blank" class="whatsapp">
+                            <b-btn v-if="isMobile()" :href="account.share.whatsapp" target="_blank" class="whatsapp">
                                 <font-awesome-icon :icon="['fab', 'whatsapp']" />
                             </b-btn>
                         </p>
