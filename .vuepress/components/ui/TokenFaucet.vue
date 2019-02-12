@@ -75,16 +75,32 @@
                         <h4>Earn more Shaka Tokens with your referral link</h4>
                         <b-form-group id="my-link-group"
                                       label="Your referral link is:"
-                                      label-for="my-link"
-                                      description="Share link with your friends and earn Shaka Tokens">
+                                      label-for="my-link">
                             <b-form-input id="my-link"
                                           name="my-link"
                                           type="text"
                                           size="lg"
                                           readonly
-                                          v-model="account.referralLink">
+                                          v-model="account.share.link">
                             </b-form-input>
                         </b-form-group>
+                        <p class="share-link">
+                            <b-btn :href="account.share.twitter" target="_blank" class="twitter">
+                                <font-awesome-icon :icon="['fab', 'twitter']" />
+                            </b-btn>
+                            <b-btn :href="account.share.facebook" target="_blank" class="facebook">
+                                <font-awesome-icon :icon="['fab', 'facebook-f']" />
+                            </b-btn>
+                            <b-btn :href="account.share.telegram" target="_blank" class="telegram">
+                                <font-awesome-icon :icon="['fab', 'telegram-plane']" />
+                            </b-btn>
+                            <b-btn :href="account.share.whatsapp" target="_blank" class="whatsapp">
+                                <font-awesome-icon :icon="['fab', 'whatsapp']" />
+                            </b-btn>
+                        </p>
+                        <p class="lead">
+                            Share with your friends and earn Shaka Tokens
+                        </p>
                     </template>
                     <template v-else>
                         <ui--loader :loading="true"></ui--loader>
@@ -183,7 +199,9 @@
           referredAddresses: [],
           lastUpdate: 0,
           nextClaimTime: 0,
-          referralLink: '',
+          share: {
+            link: '',
+          },
         },
       };
     },
@@ -286,9 +304,14 @@
               await this.promisify(this.instances.faucet.nextClaimTime, this.account.address)
             ).valueOf() * 1000;
 
-            this.account.referralLink = window.location.origin + this.$withBase(
+            this.account.share.link = window.location.origin + this.$withBase(
               `/faucet.html?referral=${this.account.address}`
             );
+
+            this.account.share.facebook = `https://www.facebook.com/sharer.php?u=${this.account.share.link}&quote=Earn FREE Shaka, the token that will make you part of the FriendsFingers DAO`; // eslint-disable-line max-len
+            this.account.share.twitter = `https://twitter.com/intent/tweet?url=${this.account.share.link}&text=Earn FREE Shaka, the token that will make you part of the @friendsfingers DAO`; // eslint-disable-line max-len
+            this.account.share.telegram = `https://t.me/share/url?url=${this.account.share.link}&text=Earn FREE Shaka, the token that will make you part of the @friendsfingers DAO`; // eslint-disable-line max-len
+            this.account.share.whatsapp = `whatsapp://send?text=Earn FREE Shaka, the token that will make you part of the FriendsFingers DAO ${this.account.share.link}`; // eslint-disable-line max-len
           }
           this.loadingData = false;
         } catch (e) {
