@@ -309,7 +309,7 @@
             );
 
             this.account.share.facebook = `https://www.facebook.com/sharer.php?u=${this.account.share.link}&quote=Earn FREE Shaka, the token that will make you part of the FriendsFingers DAO`; // eslint-disable-line max-len
-            this.account.share.twitter = `https://twitter.com/intent/tweet?url=${this.account.share.link}&text=Earn FREE Shaka, the token that will make you part of the @friendsfingers DAO`; // eslint-disable-line max-len
+            this.account.share.twitter = `https://twitter.com/intent/tweet?url=${this.account.share.link}&hashtags=ethereum,blockchain,erc20,airdrop&text=Earn FREE Shaka, the token that will make you part of the @friendsfingers DAO`; // eslint-disable-line max-len
             this.account.share.telegram = `https://t.me/share/url?url=${this.account.share.link}&text=Earn FREE Shaka, the token that will make you part of the @friendsfingers DAO`; // eslint-disable-line max-len
             this.account.share.whatsapp = `whatsapp://send?text=Earn FREE Shaka, the token that will make you part of the FriendsFingers DAO ${this.account.share.link}`; // eslint-disable-line max-len
           }
