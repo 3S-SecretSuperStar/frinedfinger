@@ -141,9 +141,18 @@
                     <p class="card-text">
                         We've already distributed <b>{{ faucet.distributedTokens }} {{ token.symbol }}</b>.
                         Remaining tokens <b>{{ faucet.remainingTokens }} {{ token.symbol }}</b>.<br>
-                        You can earn <b>{{ faucet.dailyRate }} {{ token.symbol }}</b> per day and
-                        <b>{{ faucet.referralTokens }} {{ token.symbol }}</b>
-                        for each time your friends will use the faucet.
+
+                        <b-progress :value="faucet.percentage"
+                                    variant="warning"
+                                    striped
+                                    :animated="true"
+                                    class="mt-2" />
+
+                        <small>
+                            You can earn <b>{{ faucet.dailyRate }} {{ token.symbol }}</b> per day and
+                            <b>{{ faucet.referralTokens }} {{ token.symbol }}</b>
+                            for each time your friends will use the faucet.
+                        </small>
                     </p>
                 </template>
             </b-card>
@@ -276,6 +285,10 @@
           this.faucet.distributedTokens = parseFloat(
             this.web3.fromWei(await this.promisify(this.instances.faucet.totalDistributedTokens))
           );
+
+          this.faucet.max = this.faucet.distributedTokens + this.faucet.remainingTokens;
+
+          this.faucet.percentage = 100 * this.faucet.distributedTokens / this.faucet.max;
         } catch (e) {
           console.log(e);
           this.loading = false;
