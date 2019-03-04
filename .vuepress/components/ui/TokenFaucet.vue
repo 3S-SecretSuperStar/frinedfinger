@@ -69,7 +69,7 @@
 
                             <br>
                             <small class="text-muted mt-3">
-                                Note: you need to pay Gas Fee to claim tokens
+                                Note: you just need to pay Gas to get your tokens
                                 <b-link href="https://kb.myetherwallet.com/gas/what-is-gas-ethereum.html"
                                         target="_blank" v-b-tooltip.hover title="What is Gas?">
                                     <font-awesome-icon icon="info-circle" />
