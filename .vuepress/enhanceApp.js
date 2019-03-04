@@ -2,9 +2,11 @@ import BootstrapVue from 'bootstrap-vue';
 import VeeValidate from 'vee-validate';
 import { VueSpinners } from '@saeris/vue-spinners';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { faTelegramPlane, faMediumM, faTwitter, faFacebookF, faLinkedinIn, faEthereum, faGithub, faWhatsapp } from '@fortawesome/free-brands-svg-icons'; // eslint-disable-line max-len
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
+library.add(faInfoCircle);
 library.add(faTelegramPlane);
 library.add(faMediumM);
 library.add(faTwitter);

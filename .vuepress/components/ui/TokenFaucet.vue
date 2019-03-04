@@ -67,6 +67,15 @@
                                 Get Tokens
                             </b-btn>
 
+                            <br>
+                            <small class="text-muted mt-3">
+                                Note: you need to pay Gas Fee to claim tokens
+                                <b-link href="https://kb.myetherwallet.com/gas/what-is-gas-ethereum.html"
+                                        target="_blank" v-b-tooltip.hover title="What is Gas?">
+                                    <font-awesome-icon icon="info-circle" />
+                                </b-link>
+                            </small>
+
                             <b-alert show v-if="trx.hash" variant="success" class="mt-3">
                                 Last transaction: <b-link :href="trx.link" target="_blank">{{ trx.hash }}</b-link>.
                             </b-alert>
