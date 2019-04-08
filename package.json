@@ -1,6 +1,6 @@
 {
   "title": "Shaka Token",
-  "name": "shaka-faucet",
+  "name": "shaka.friendsfingers.com",
   "version": "1.0.0",
   "description": "Shaka (HAK) | The Token for a new way crowdfunding",
   "scripts": {
@@ -14,7 +14,7 @@
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/FriendsFingers/shaka-faucet/issues"
+    "url": "https://github.com/FriendsFingers/shaka.friendsfingers.com/issues"
   },
   "license": "MIT",
   "author": "FriendsFingers (https://www.friendsfingers.com/)",
@@ -26,7 +26,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/FriendsFingers/shaka-faucet.git"
+    "url": "https://github.com/FriendsFingers/shaka.friendsfingers.com.git"
   },
   "dependencies": {
     "web3": "0.20.6"

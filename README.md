@@ -35,4 +35,4 @@ npm run deploy
 
 ## License
 
-Code released under the [MIT License](https://github.com/FriendsFingers/shaka-faucet/blob/master/LICENSE).
+Code released under the [MIT License](https://github.com/FriendsFingers/shaka.friendsfingers.com/blob/master/LICENSE).
